@@ -38,6 +38,18 @@ def __init__(self, plc_ip='127.0.0.1', plc_port=2005, px4_listen_port=2006):
 ```
 
 ## PLC에서 확인
-* PX4 -> PLC로 전송하는 Write 명령이 제대로 실행되는지 확인한다.
+* PX4 -> PLC로 전송하는 Write 명령이 제대로 실행되는지 확인한다. (전송되는 각 필드의 값은 아래와 같다.)
+```
+engine_thrust = 1
+clutch = 2
+steering_angle = 3
+trim_angle = 4
+engine_ignition = 5
+bow_thruster_power = 6
+bow_thruster_rev = 7
+```
+
 * PX4 -> PLC로 전송하는 Read Request 명령이 제대로 실행되는지 확인한다.
+   * PLC 디버거로 Reqd Request가 제대로 들어오는지 확인한다.
 * PX4 -> PLC로 Reqad Request를 수신하면 이에 따라 PLC -> PX4로 해당 주소의 값을 제대로 전송하는지 확인한다.
+   * PX4에서 수신한 값은 화면에 출력된다.
