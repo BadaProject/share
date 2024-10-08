@@ -209,6 +209,46 @@ class PLCPacket:
 		]
 		self.read_header_buffer[19] = getCheckSum(self.read_header_buffer, 0, 19)
 
+		self.read_header_buffer[19] = getCheckSum(self.read_header_buffer, 0, 19)
+# 4C5349532D584754
+# 0000
+# 0000
+# 0033
+# 0000
+# 1800
+# 0000
+# 5400
+# 0100
+# 0000
+# 0200
+# 0600
+# 2544
+# 4234
+# 3030
+# 0600
+# 2544
+# 4234
+# 3031
+		# PLC 테스트용 
+		self.read_header_buffer2 = [0x4C, 0x53, 0x49, 0x53, 0x2D, 0x58, 0x47, 0x54,
+		0x00, 0x00, # Reserved[2]
+		0x00, 0x00, # PLC Info[2]
+		0x00, # CPU Info[1]
+		0x33, # Source of Frame[1]
+		0x00, 0x00, # Invoke ID[2]
+		0x18, 0x00, # Length[2] REQUEST_READ부터 마지막까지의 길이
+		0x00, # Bit0~3 : slot # of FEnet I/F module, Bit4~7 : base # of FEnet I/F module
+		0x00, #getCheckSum(self.read_header_buffer, 0, len(self.read_header_buffer)), # 0xFF, checksum ToDo
+		0x54, 0x00, # Request[2]
+		0x01, 0x00, # Data Type[2]
+		0x00, 0x00, # Reserved[2]
+		0x02, 0x00, # block length[2]
+		0x06, 0x00, # block name length[2] %DB00802
+		0x25, 0x44, 0x42, 0x34, 0x30, 0x30, 0x06, 0x00, 0x25, 0x44, 0x42, 0x34,#  %D00401을 읽으려면 %DB00802 를 사용해야 한다.
+		0x30, 0x31 # PLC -> PX4 data size : 30을 16진수로 표현하면 1E이다. (byte의 개수)
+		]
+
+
 		self.read_response_header_buffer = [0x4C, 0x53, 0x49, 0x53, 0x2D, 0x58, 0x47, 0x54,
 		0x00, 0x00, # Reserved[2]
 		0x00, 0x00, # PLC Info[2]
@@ -256,8 +296,9 @@ class PLCPacket:
 						   px4ToplcPacket.emtpy1, px4ToplcPacket.empty2, px4ToplcPacket.engine_thrust, px4ToplcPacket.clutch, px4ToplcPacket.steering_angle, px4ToplcPacket.trim_angle, px4ToplcPacket.empty3, px4ToplcPacket.engine_ignition, px4ToplcPacket.bow_thruster_power, px4ToplcPacket.bow_thruster_rev, px4ToplcPacket.reserved1, px4ToplcPacket.reserved2, px4ToplcPacket.reserved3, px4ToplcPacket.reserved4, px4ToplcPacket.reserved5)
 	
 	def makeReadPacket(self):
-		return struct.pack('40B', *self.read_header_buffer)
-
+		# return struct.pack('40B', *self.read_header_buffer)
+		return struct.pack(str(len(self.read_header_buffer2))+'B', *self.read_header_buffer2)
+	
 	def makeReadRespondPacket(self):
 		plcTopx4Packet = PlcToPx4Packet()
 		plcTopx4Packet.auto_control_status = 1

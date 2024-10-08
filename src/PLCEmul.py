@@ -28,7 +28,7 @@ class PLCEmulator:
         while True:
             data, addr = plc_socket.recvfrom(1024)
             print(data)
-            if len(data) > 40:
+            if len(data) > 50:
                 print('write request packet')
                 if data[20] == self.plc_packet.REQUEST_WRITE:
                     print('OK! write request packet')
