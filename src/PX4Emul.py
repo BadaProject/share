@@ -19,15 +19,17 @@ class PX4Emulator:
         self.plc_port = plc_port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.plc_packet = PLCPacket()
+        self.px4_ip = '192.168.2.200'
+        self.sock.bind(('', self.px4_listen_port))
         self.isWriteCommand = False
     def send(self, data):
         self.sock.send(data, (self.plc_ip, self.plc_port))
     
     def receive_data(self):
-        px4_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        px4_socket.bind(('', self.px4_listen_port))
+        # px4_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # px4_socket.bind((self.px4_ip, self.px4_listen_port))
         while True:
-            data, addr = px4_socket.recvfrom(1024)
+            data, addr = self.sock.recvfrom(1024)
             if data[20] == self.plc_packet.RESPONSE_READ:
                 if data[19] == self.plc_packet.getCheckSum(data, 0, 19):
                     print('-----PLC RESPONSE_READ Received!!! -------------')
@@ -39,13 +41,13 @@ class PX4Emulator:
             print(f"Received data: {data} from {addr} length : {len(data)}")
 
     def send_data(self):
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+        
             while True:
                 if self.isWriteCommand:
-                    sock.sendto(self.plc_packet.makeWritePacket(), (self.plc_ip, self.plc_port))
+                    self.sock.sendto(self.plc_packet.makeWritePacket(), (self.plc_ip, self.plc_port))
                     print('send write command')
                 else:
-                    sock.sendto(self.plc_packet.makeReadPacket(), (self.plc_ip, self.plc_port))
+                    self.sock.sendto(self.plc_packet.makeReadPacket(), (self.plc_ip, self.plc_port))
                     print('send read command')
                 sleep(0.5)
                 self.isWriteCommand = not self.isWriteCommand
