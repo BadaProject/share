@@ -13,7 +13,7 @@ from plc import PLCPacket, PlcToPx4Packet
 import socket
 
 class PX4Emulator:
-    def __init__(self, plc_ip='127.0.0.1', plc_port=2005, px4_listen_port=2006):
+    def __init__(self, plc_ip='192.168.2.88', plc_port=2005, px4_listen_port=2006):
         self.px4_listen_port = px4_listen_port
         self.plc_ip = plc_ip
         self.plc_port = plc_port
@@ -34,8 +34,8 @@ class PX4Emulator:
                 if data[19] == self.plc_packet.getCheckSum(data, 0, 19):
                     print('-----PLC RESPONSE_READ Received!!! -------------')
                     plc_packet = PlcToPx4Packet()
-                    plc_packet.parseDataBytes(data[32:])
-                    plc_packet.printData()
+                    # plc_packet.parseDataBytes(data[32:])
+                    # plc_packet.printData()
                     # 32번째 index부터 30bytes 데이터를 short int 15개에 담는다.
             print(data)
             print(f"Received data: {data} from {addr} length : {len(data)}")
