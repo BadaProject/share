@@ -34,8 +34,8 @@ class PX4Emulator:
                 if data[19] == self.plc_packet.getCheckSum(data, 0, 19):
                     print('-----PLC RESPONSE_READ Received!!! -------------')
                     plc_packet = PlcToPx4Packet()
-                    # plc_packet.parseDataBytes(data[32:])
-                    # plc_packet.printData()
+                    plc_packet.parseDataBytes(data[32:])
+                    plc_packet.printData()
                     # 32번째 index부터 30bytes 데이터를 short int 15개에 담는다.
             print(data)
             print(f"Received data: {data} from {addr} length : {len(data)}")
