@@ -54,12 +54,12 @@ def getCheckSum(data, start, length):
 class PlcToPx4Packet:
 	def __init__(self):
 		self.auto_control_status = 0
-		self.empty1 = 0
+		self.emergency_stop_status = 0
 		self.engine_rpm_status = 0
 		self.clutch_status = 0
 		self.steering_angle_status = 0
-		self.trim_angle_command = 0
-		self.empty2 = 0
+		self.trim_angle_status = 0
+		self.empty1 = 0
 		self.engine_running_status = 0
 		self.bow_thruster_power_status = 0
 		self.bow_thruster_rev_status = 0
@@ -74,12 +74,12 @@ class PlcToPx4Packet:
 
 	def parseData(self, data):
 		self.auto_control_status = data[0]
-		self.empty1 = data[1]
+		self.emergency_stop_status = data[1]
 		self.engine_rpm_status = data[2]
 		self.clutch_status = data[3]
 		self.steering_angle_status = data[4]
-		self.trim_angle_command = data[5]
-		self.empty2 = data[6]
+		self.trim_angle_status = data[5]
+		self.empty1 = data[6]
 		self.engine_running_status = data[7]
 		self.bow_thruster_power_status = data[8]
 		self.bow_thruster_rev_status = data[9]
