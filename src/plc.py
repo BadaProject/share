@@ -198,7 +198,7 @@ class PLCPacket:
 		0x00, 0x00, # Invoke ID[2]
 		0x12, 0x00, # Length[2]
 		0x00, # Bit0~3 : slot # of FEnet I/F module, Bit4~7 : base # of FEnet I/F module
-		0xFF, #getCheckSum(self.read_header_buffer, 0, len(self.read_header_buffer)), # 0xFF, checksum ToDo
+		0x00, #getCheckSum(self.read_header_buffer, 0, len(self.read_header_buffer)), # 0xFF, checksum ToDo
 		REQUEST_READ, 0x00, # Request[2]
 		0x14, 0x00, # Data Type[2]
 		0x00, 0x00, # Reserved[2]
@@ -208,28 +208,8 @@ class PLCPacket:
 		0x1E, 0x00 # PLC -> PX4 data size : 30을 16진수로 표현하면 1E이다.
 		]
 
-		self.read_header_buffer[19] = getCheckSum(self.read_header_buffer, 0, 19)
+		# self.read_header_buffer[19] = getCheckSum(self.read_header_buffer, 0, 19)
 
-		self.read_header_buffer[19] = getCheckSum(self.read_header_buffer, 0, 19)
-# 4C5349532D584754
-# 0000
-# 0000
-# 0033
-# 0000
-# 1800
-# 0000
-# 5400
-# 0100
-# 0000
-# 0200
-# 0600
-# 2544
-# 4234
-# 3030
-# 0600
-# 2544
-# 4234
-# 3031
 		# PLC 테스트용 
 		self.read_header_buffer2 = [0x4C, 0x53, 0x49, 0x53, 0x2D, 0x58, 0x47, 0x54,
 		0x00, 0x00, # Reserved[2]
@@ -298,7 +278,7 @@ class PLCPacket:
 	
 	def makeReadPacket(self):
 		# return struct.pack('40B', *self.read_header_buffer)
-		return struct.pack(str(len(self.read_header_buffer2))+'B', *self.read_header_buffer2)
+		return struct.pack(str(len(self.read_header_buffer))+'B', *self.read_header_buffer)
 	
 	def makeReadRespondPacket(self):
 		plcTopx4Packet = PlcToPx4Packet()
