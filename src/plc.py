@@ -90,12 +90,12 @@ class PlcToPx4Packet:
 		self.reserved5 = data[14]
 	def printData(self):
 		print('auto control status: ', self.auto_control_status)
-		print('empty1: ', self.empty1)
+		print('emergency stop status: ', self.emergency_stop_status)
 		print('engine rpm status: ', self.engine_rpm_status)
 		print('clutch status: ', self.clutch_status)
 		print('steering angle status: ', self.steering_angle_status)
-		print('trim angle command: ', self.trim_angle_command)
-		print('empty2: ', self.empty2)
+		print('trim angle status: ', self.trim_angle_status)
+		print('empty1: ', self.empty1)
 		print('engine running status: ', self.engine_running_status)
 		print('bow thruster power status: ', self.bow_thruster_power_status)
 		print('bow thruster rev status: ', self.bow_thruster_rev_status)
