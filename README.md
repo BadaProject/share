@@ -55,3 +55,8 @@ bow_thruster_rev = 7
    * PLC 디버거로 Reqd Request가 제대로 들어오는지 확인한다.
 * PX4 -> PLC로 Reqad Request를 수신하면 이에 따라 PLC -> PX4로 해당 주소의 값을 제대로 전송하는지 확인한다.
    * PX4에서 수신한 값은 화면에 출력된다.
+
+## example
+```
+git clone https://id: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@github.com/badaproject/repo_name.git
+```
